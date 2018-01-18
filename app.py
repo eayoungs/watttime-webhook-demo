@@ -2,22 +2,23 @@ from flask import Flask, render_template, request, url_for
 from flask.ext.mail import Message, Mail
 from os import environ
 
-####### CONFIG
+# ###### CONFIG
 TO_EMAIL = environ.get('TO_EMAIL')
 MAIL_SERVER = environ.get('MAIL_SERVER')
 MAIL_PORT = environ.get('MAIL_PORT')
 MAIL_USERNAME = environ.get('MAIL_USERNAME')
 MAIL_PASSWORD = environ.get('MAIL_PASSWORD')
 MAIL_USE_TLS = True
-####### END CONFIG
+# ###### END CONFIG
 
-####### INIT
+# ###### INIT
 app = Flask(__name__)
 app.config.from_object(__name__)
 mail = Mail(app)
-####### END INIT
+# ###### END INIT
 
-####### VIEWS
+
+# ###### VIEWS
 @app.route('/')
 @app.route('/index')
 def index():
@@ -26,6 +27,7 @@ def index():
                            to_email=TO_EMAIL,
                            from_email=MAIL_USERNAME,
                            target_url=url_for('wt_feed', _external=True))
+
 
 @app.route("/wt_feed", methods=['POST'])
 def wt_feed():
@@ -37,9 +39,10 @@ def wt_feed():
     msg.body = render_template('email.txt', **data['data'])
     mail.send(msg)
     return 'ok'
-####### END VIEWS
+# ###### END VIEWS
 
-####### MAIN
+
+# ###### MAIN
 if __name__ == '__main__':
     app.run(debug=True)
-####### END MAIN
+# ###### END MAIN

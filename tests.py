@@ -2,6 +2,7 @@ import unittest
 from app import app, mail
 import json
 
+
 class TestConfig(unittest.TestCase):
     def setUp(self):
         app.testing = True
@@ -34,7 +35,7 @@ class TestFeed(unittest.TestCase):
         response = self.app.post('/wt_feed',
                                  data=json.dumps(self.data),
                                  content_type='application/json')
-        self.assertEqual(response.status_code, 200)        
+        self.assertEqual(response.status_code, 200)
 
     def test_email(self):
         with mail.record_messages() as outbox:
